@@ -6,37 +6,99 @@
 		<grammar src="grammar.xml#START" type="application/grammar-xml" maxage="0"/>
 		<initial name="welcome">
 			<prompt bargein="false">
-				Welcome to the travel booking system. You can now make your reservation.
+				Hello, and welcome to <break strength="none"/> <s> <prosody pitch="x-low">pasta</prosody></s> student travel agency
 			</prompt>
+			<nomatch count="1">
+				<prompt>
+					Please speak clearly.
+				</prompt>
+			</nomatch>
 			<nomatch count="2">
 				<prompt>
-					Sorry, I don't understand.
-					I will ask for the information one piece at a time.
+					Sorry, I still don't understand. 
 				</prompt>
-				<assign name="welcome" expr="true"/>
-				<reprompt/>
 			</nomatch>
+			<noinput>
+				<prompt>
+					Speak up.  <emphasis>Stupid! 
+</emphasis>
+				</prompt>
+			</noinput>
+			<assign name="welcome" expr="true"/>
+			<reprompt/>
 		</initial>
 		<field name="origin">
 			<grammar src="grammar.xml#ORIGIN"/>
 			<prompt>From where do you want to go?</prompt>
+			<nomatch>
+				<prompt>
+					From <emphasis>which</emphasis> outbound city?
+				</prompt>
+			</nomatch>
+			<noinput>
+				<prompt>
+					Speak up the city name!  
+				</prompt>
+			</noinput>
 		</field>
 		<field name="destination">
 			<grammar src="grammar.xml#DESTINATION"/>
 			<prompt>Where do you want to go to?</prompt>
+			<nomatch>
+				<prompt>
+					To <emphasis> which </emphasis> city?
+				</prompt>
+			</nomatch>
+			<noinput>
+				<prompt>
+					Speak up the destination!  
+				</prompt>
+			</noinput>
 		</field>
 		<field name="date">
 			<grammar src="grammar.xml#DATE"/>
 			<prompt>Which date do you want to go?</prompt>
+			<nomatch>
+				<prompt>
+					Say the date clearly.
+				</prompt>
+			</nomatch>
+			<noinput>
+				<prompt>
+					Speak up the date!
+				</prompt>
+			</noinput>
 		</field>
 		<field name="time">
 			<grammar src="grammar.xml#TIME"/>
 			<prompt>At what time do you want to go?</prompt>
+			<nomatch>
+				<prompt>
+					Say the time.
+				</prompt>
+			</nomatch>
+			<noinput>
+				<prompt>
+					Speak up the time. 
+				</prompt>
+			</noinput>
 		</field>
-		<filled>
+		<field name="confirm" type="boolean">
 			<prompt>
-				Thanks for your reservation. You have now booked a trip from <value expr="origin"/> to <value expr="destination"/>, <value expr="date"/>, <value expr="time"/>. Goodbye. 
+				Thank you. You want to go from <value expr="origin"/>  to <value expr="destination"/>, on  <value expr="date"/>, at <value expr="time"/>.<break strength="none"/> Is that correct? 
 			</prompt>
-		</filled>
+			<filled>
+			<if cond="confirm==false">
+			<prompt>
+				 <voice gender="male" languages="en-US" required="languages gender variant">Let's try again. </voice>
+			</prompt>
+			<clear namelist="confirm origin destination date time"/>
+			</if>	
+			</filled>
+		</field>
+			<block>
+ Thanks for your reservation. Goodbye. 
+</block>
 	</form>
 </vxml>
+

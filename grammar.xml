@@ -69,6 +69,13 @@
     <one-of>
       <item>london</item>
       <item>paris</item>
+      <item>stockholm</item>
+      <item>taipei</item>
+      <item>dubai</item>
+      <item>moscow</item>
+      <item>helsinki</item>
+      <item>saint petersburg</item>
+      <item>mexico city</item>
     </one-of>
   </rule>
 
@@ -94,13 +101,40 @@
             <ruleref uri="#DATE_1_31"/>
             <tag>out=rules.MONTH + ' ' + rules.DATE_1_31</tag>
         </item>
+        <item>
+        <item>"on christmas"</item>
+        <tag>out="december the twenty fourth"</tag>
+        </item>
       </one-of>
   </rule>
 
   <rule id="TIME" scope="public">
-      <item>at</item>
+      <item repeat="0-1">
+       	<item>at</item>
+      </item>
+      <item repeat="0-1">
+      	<one-of>
+      	<item>five to</item>
+      	<item>five past</item>
+      	<item>quarter to</item>
+      	<item>quarter past</item>
+      	<item>twenty to</item>
+      	<item>twenty past</item>
+      	<item>half past</item>
+              </one-of>
+      </item>
       <item><ruleref uri="#HOURS_1_12"/></item>
-      <item>o'clock</item>
+      <item repeat="0-1">
+      	<one-of>
+              <item>o'clock</item>
+              <item>thirty</item>
+              <item>twenty</item>
+              <item>ten</item>
+              <item>five</item>
+              <item>fifteen</item>
+              <item>quarter</item>
+              </one-of>
+      </item>
   </rule>
 
   <rule id="MONTH">
@@ -179,5 +213,4 @@
           <item>nineteenth</item>
       </one-of>
   </rule>
-
 </grammar>
